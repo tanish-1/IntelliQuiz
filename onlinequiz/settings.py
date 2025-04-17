@@ -116,9 +116,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static')  # Only needed if you handle uploads
 
+STATICFILES_DIRS=[
+STATIC_DIR,
+ ]
 
 LOGIN_REDIRECT_URL='/afterlogin'
 
