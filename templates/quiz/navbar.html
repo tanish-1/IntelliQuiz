@@ -47,11 +47,11 @@
         <div class="navbar-nav">
           <a style="
           padding-left: 30px;
-      " href="/" class="nav-item nav-link active">Home</a>
+      " href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
 
-          <a href="/teacher/teacherclick" class="nav-item nav-link">Teacher</a>
-          <a href="/student/studentclick" class="nav-item nav-link">Student</a>
-          <a href="/adminclick" class="nav-item nav-link">Admin</a>
+          <a href="{% url 'teacherclick' %}" class="nav-item nav-link">Teacher</a>
+          <a href="{% url 'studentclick' %}" class="nav-item nav-link">Student</a>
+          <a href="{% url 'adminclick' %}" class="nav-item nav-link">Admin</a>
 
 
         </div>
