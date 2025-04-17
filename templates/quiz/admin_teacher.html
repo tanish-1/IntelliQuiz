@@ -1,0 +1,177 @@
+{% extends 'quiz/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    .dashboard-container {
+      padding: 1.5rem 0;
+    }
+
+    .dashboard-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: none;
+      height: 100%;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-blue {
+      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    }
+
+    .card-green {
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+    }
+
+    .card-yellow {
+      background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+    }
+
+   .stat-card-inner {
+  padding: 1.5rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures space between title and value */
+  height: 100px; /* Increased from 100% to fixed height */
+}
+
+    .stat-card-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card-title a {
+      color: white;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .stat-card-title a:hover {
+      opacity: 0.9;
+    }
+
+    .stat-card-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .stat-card-icon {
+      font-size: 2.5rem;
+      opacity: 0.8;
+    }
+
+    .stat-card-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    /* Animation for cards */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-anim-1 {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .card-anim-2 {
+      animation: fadeInUp 0.5s 0.1s ease forwards;
+      opacity: 0;
+    }
+
+    .card-anim-3 {
+      animation: fadeInUp 0.5s 0.2s ease forwards;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<div class="dashboard-container">
+  <h1 class="dashboard-title">Teacher Management Dashboard</h1>
+
+  <div class="stats-grid">
+    <!-- Total Teachers Card -->
+    <div class="stat-card card-blue card-anim-1">
+      <div class="stat-card-inner">
+        <h2 class="stat-card-title">
+          <a href="admin-view-teacher">Total Teachers</a>
+        </h2>
+        <div class="stat-card-content">
+          <i class="fas fa-chalkboard-teacher stat-card-icon"></i>
+          <span class="stat-card-value">{{total_teacher}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Teachers Card -->
+    <div class="stat-card card-green card-anim-2">
+      <div class="stat-card-inner">
+        <h2 class="stat-card-title">
+          <a href="admin-view-pending-teacher">Pending Approvals</a>
+        </h2>
+        <div class="stat-card-content">
+          <i class="fas fa-spinner stat-card-icon"></i>
+          <span class="stat-card-value">{{pending_teacher}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teacher Salary Card -->
+    <div class="stat-card card-yellow card-anim-3">
+      <div class="stat-card-inner">
+        <h2 class="stat-card-title">
+          <a href="admin-view-teacher-salary">Total Salary Disbursed</a>
+        </h2>
+        <div class="stat-card-content">
+          <i class="fas fa-rupee-sign stat-card-icon"></i>
+          <span class="stat-card-value">{{salary}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add any custom JavaScript needed for the dashboard
+  document.addEventListener('DOMContentLoaded', function() {
+    // You could add chart initializations or other dashboard functionality here
+  });
+</script>
+{% endblock content %}

@@ -1,0 +1,175 @@
+{% extends 'quiz/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    .dashboard-container {
+      padding: 1.5rem 0;
+    }
+
+    .dashboard-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: visible;
+      transition: all 0.3s ease;
+      border: none;
+      height: 100%;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-blue {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    }
+
+    .card-green {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    }
+
+   .stat-card-inner {
+  padding: 1.5rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures space between title and value */
+  height: 100px; /* Increased from 100% to fixed height */
+}
+
+    .stat-card-title {
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card-title a {
+      color: white;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .stat-card-title a:hover {
+      opacity: 0.9;
+      text-decoration: underline;
+    }
+
+    .stat-card-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .stat-card-icon {
+      font-size: 2.25rem;
+      opacity: 0.9;
+      width: 50px;
+      text-align: center;
+    }
+
+    .stat-card-value {
+      font-size: 2.25rem;
+      font-weight: 700;
+      text-align: right;
+      margin-left: 1rem;
+    }
+
+    /* Animation for cards */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-anim-1 {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .card-anim-2 {
+      animation: fadeInUp 0.5s 0.1s ease forwards;
+      opacity: 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-card-title {
+        font-size: 1rem;
+      }
+
+      .stat-card-icon,
+      .stat-card-value {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<div class="dashboard-container">
+  <h1 class="dashboard-title">Student Management Dashboard</h1>
+
+  <div class="stats-grid">
+    <!-- Total Students Card -->
+    <div class="stat-card card-blue card-anim-1">
+      <div class="stat-card-inner">
+        <h2 class="stat-card-title">
+          <a href="admin-view-student">Total Students</a>
+        </h2>
+        <div class="stat-card-content">
+          <i class="fas fa-user-graduate stat-card-icon"></i>
+          <span class="stat-card-value">{{total_student}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Marks Card -->
+    <div class="stat-card card-green card-anim-2">
+      <div class="stat-card-inner">
+        <h2 class="stat-card-title">
+          <a href="admin-view-student-marks">Student Marks</a>
+        </h2>
+        <div class="stat-card-content">
+          <i class="fas fa-sort-numeric-up stat-card-icon"></i>
+          <span class="stat-card-value">:)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Any additional JavaScript can be added here
+  });
+</script>
+{% endblock content %}

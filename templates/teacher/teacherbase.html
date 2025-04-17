@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntelliQuiz - Teacher Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --secondary: #0EA5E9;
+      --dark: #1E293B;
+      --dark-secondary: #334155;
+      --light: #F8FAFC;
+      --light-secondary: #E2E8F0;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --success: #10B981;
+      --sidebar-width: 280px;
+      --sidebar-width-collapsed: 80px;
+      --header-height: 70px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+<!--    body {-->
+<!--      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;-->
+<!--      background-color: #F1F5F9;-->
+<!--      color: var(&#45;&#45;dark);-->
+<!--      line-height: 1.5;-->
+<!--    }-->
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header Styles */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: #1e293b;
+      box-shadow: var(--shadow);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+   .brand-logo  span {
+      color: #3b82f6;
+    }
+    .menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      margin-right: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      color: #fff;
+    }
+
+    .menu-toggle:hover {
+      background-color: var(--light-secondary);
+      color: var(--primary);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-search {
+      position: relative;
+      width: 250px;
+    }
+
+    .header-search input {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      border-radius: 8px;
+      border: 1px solid var(--light-secondary);
+      background-color: var(--light);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .header-search input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .header-search i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--dark-secondary);
+      font-size: 14px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background-color: var(--primary);
+      color: white;
+      font-weight: 500;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .btn-logout:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .notification-badge {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .notification-badge:hover {
+      background-color: var(--light-secondary);
+      color: var(--primary);
+    }
+
+    .notification-indicator {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--danger);
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--header-height));
+      background: #1e293b;
+      color: #fff;
+      box-shadow: var(--shadow);
+      padding: 24px 0;
+      overflow-y: auto;
+      transition: var(--transition);
+      z-index: 99;
+    }
+
+    .sidebar.collapsed {
+      width: var(--sidebar-width-collapsed);
+    }
+
+    .profile-section {
+      padding: 0 24px 24px 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--light-secondary);
+      margin-bottom: 16px;
+      transition: var(--transition);
+    }
+
+    .sidebar.collapsed .profile-section {
+      padding: 0 12px 20px 12px;
+    }
+
+    .profile-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--light-secondary);
+      margin-bottom: 16px;
+      transition: var(--transition);
+    }
+
+    .sidebar.collapsed .profile-image {
+      width: 50px;
+      height: 50px;
+      border-width: 2px;
+    }
+
+    .profile-name {
+      font-weight: 600;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 4px;
+      transition: var(--transition);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .profile-role {
+      font-size: 14px;
+      color: var(--secondary);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .sidebar.collapsed .profile-name,
+    .sidebar.collapsed .profile-role {
+      opacity: 0;
+      visibility: hidden;
+      height: 0;
+      margin: 0;
+    }
+
+    .nav-menu {
+      padding: 0 12px;
+    }
+
+    .nav-item {
+      margin-bottom: 8px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--dark-secondary);
+      font-weight: 500;
+      font-size: 14px;
+      transition: var(--transition);
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(79, 70, 229, 0.08);
+      color: var(--primary);
+    }
+
+    .nav-link.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      transition: var(--transition);
+    }
+
+    .sidebar.collapsed .nav-text {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .sidebar.collapsed .nav-icon {
+      margin-right: 0;
+      width: 100%;
+    }
+
+    /* Main Content */
+    .content {
+      margin-left: var(--sidebar-width);
+      margin-top: var(--header-height);
+      padding: 24px;
+      min-height: calc(100vh - var(--header-height));
+      transition: var(--transition);
+    }
+
+    .content.expanded {
+      margin-left: var(--sidebar-width-collapsed);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 24px;
+      margin-top: 24px;
+      text-align: center;
+      color: var(--dark-secondary);
+      font-size: 14px;
+      border-top: 1px solid var(--light-secondary);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 991px) {
+      :root {
+        --sidebar-width: 240px;
+      }
+
+      .header-search {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        left: -100%;
+      }
+
+      .sidebar.show {
+        left: 0;
+      }
+
+      .content {
+        margin-left: 0;
+      }
+
+      .content.expanded {
+        margin-left: 0;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--light);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--light-secondary);
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #c1c9d2;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header Area -->
+
+  <header class="header">
+    <div class="header-left">
+      <div class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="brand">
+        <div class="brand-logo">INTELLI<span>QUIZ</span></div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-actions">
+        <div class="notification-badge">
+          <i class="far fa-bell"></i>
+          <span class="notification-indicator"></span>
+        </div>
+        <a href="/logout" class="btn-logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar Area -->
+  <div class="sidebar" id="sidebar">
+    <div class="profile-section">
+      <img src="{% static 'image/teacher.png' %}" class="profile-image" alt="Teacher Profile">
+      <h4 class="profile-name">{{request.user.first_name}}</h4>
+      <p class="profile-role">Teacher</p>
+    </div>
+    <nav class="nav-menu">
+      <div class="nav-item">
+        <a href="/teacher/teacher-dashboard" class="nav-link {% if request.path == '/teacher/teacher-dashboard' %}active{% endif %}">
+          <div class="nav-icon"><i class="fas fa-tachometer-alt"></i></div>
+          <span class="nav-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="/teacher/teacher-exam" class="nav-link {% if request.path == '/teacher/teacher-exam' %}active{% endif %}">
+          <div class="nav-icon"><i class="fas fa-book"></i></div>
+          <span class="nav-text">Exams</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="/teacher/teacher-question" class="nav-link {% if request.path == '/teacher/teacher-question' %}active{% endif %}">
+          <div class="nav-icon"><i class="fas fa-question-circle"></i></div>
+          <span class="nav-text">Questions</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="/teacher/teacher-view-student-marks" class="nav-link {% if request.path == '/teacher/teacher-view-student-marks' %}active{% endif %}">
+          <div class="nav-icon"><i class="fas fa-sort-numeric-up"></i></div>
+          <span class="nav-text">Student Marks</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="content" id="content">
+    {% block content %}
+    {% endblock content %}
+
+    <!-- Footer -->
+    <footer class="footer">
+      {% include "quiz/footer.html" %}
+    </footer>
+  </div>
+
+  <script>
+    // Toggle sidebar
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+
+    // Check screen size on load
+    function checkScreenSize() {
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('collapsed');
+        content.classList.remove('expanded');
+      }
+    }
+
+    window.addEventListener('load', checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
+
+    menuToggle.addEventListener('click', function() {
+      if (window.innerWidth <= 768) {
+        sidebar.classList.toggle('show');
+      } else {
+        sidebar.classList.toggle('collapsed');
+        content.classList.toggle('expanded');
+      }
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      if (window.innerWidth <= 768 &&
+          !event.target.closest('#sidebar') &&
+          !event.target.closest('#menuToggle') &&
+          sidebar.classList.contains('show')) {
+        sidebar.classList.remove('show');
+      }
+    });
+
+    // Highlight active menu item
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Add animation to content
+    window.addEventListener('DOMContentLoaded', function() {
+      const contentBlocks = document.querySelectorAll('.content > *');
+      contentBlocks.forEach((block, index) => {
+        block.classList.add('fade-in');
+        block.style.animationDelay = `${index * 0.1}s`;
+      });
+    });
+  </script>
+</body>
+</html>

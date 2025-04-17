@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<style>
+
+body{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #1a1a2e;
+      color: white;
+
+  }
+  .boxContainer{
+    margin-top:130px
+  }
+.quiz-container {
+    position: relative;
+    max-width: 800px;
+    text-align: center;
+    padding: 140px 198px;
+    background: white;
+    background-image: url("{% static 'image/quizzz.jpg' %}");/* Replace with your background image URL */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.quiz-logo-background {
+    background-color: #343a40;
+    color: #f9c74f;
+    padding: 20px;
+    border-radius: 15px;
+    font-family: 'Arial Black', sans-serif;
+}
+.quiz-logo-background>p{
+    color: white;
+}
+.button_class{
+  margin-top: 10px;
+
+  width:50px
+  height:20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+a.btn-start {
+    margin:auto;
+    justify-content:center;
+    background-color: white;
+    border: none;
+    font-size: 18px;
+    padding: 20px 45px;
+    border-radius: 65px;
+}
+a.btn-start:hover {
+    background-color: #998d8d;;
+    opacity:0.4;
+}
+
+</style>
+<body>
+  {% include "quiz/navbar.html" %}
+<br>
+<div class="boxContainer">
+<div class="quiz-container">
+  <div class="quiz-logo-background">
+    <h1 class="quiz-title">QUIZ TIME</h1>
+    <p class="mt-3">How well do you know?
+    </p>
+</div>
+  </div>
+  <div class="button_class">
+    <p><strong> Sign up if you haven't already</strong> </p>
+    <a href="/student/studentsignup" class="btn btn-start" ><i class="fa fa-user-plus" ></i></a>
+
+
+  </div>
+
+
+
+</div>
+
+</body>
+
+</html>

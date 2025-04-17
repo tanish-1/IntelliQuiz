@@ -1,0 +1,195 @@
+{% extends 'quiz/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="exam-dashboard">
+  <div class="dashboard-header">
+    <h1>Question Management</h1>
+    <p>Add or manage quiz/exam questions for students</p>
+  </div>
+
+  <div class="action-cards">
+    <div class="action-card add-exam">
+      <div class="card-icon">
+        <i class="fas fa-file-medical"></i>
+      </div>
+      <div class="card-content">
+        <h3>Add New Questions</h3>
+        <p>Create a new quiz or exam for your students</p>
+        <a href="admin-add-question" class="action-button">
+          Add Questions
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="action-card view-exams">
+      <div class="card-icon">
+        <i class="fas fa-file-alt"></i>
+      </div>
+      <div class="card-content">
+        <h3>View Questions</h3>
+        <p>Review and manage existing questions</p>
+        <a href="admin-view-question" class="action-button">
+          View Questions
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .exam-dashboard {
+    padding: 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .dashboard-header {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .dashboard-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 8px;
+  }
+
+  .dashboard-header p {
+    color: #4a5568;
+    font-size: 16px;
+  }
+
+  .action-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .action-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .add-exam {
+    border-top: 4px solid #4C51BF;
+  }
+
+  .view-exams {
+    border-top: 4px solid #3182ce;
+  }
+
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+
+  .add-exam .card-icon {
+    background-color: rgba(79, 70, 229, 0.1);
+    color: #4C51BF;
+  }
+
+  .view-exams .card-icon {
+    background-color: rgba(66, 153, 225, 0.1);
+    color: #3182ce;
+  }
+
+  .card-icon i {
+    font-size: 24px;
+  }
+
+  .card-content h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+  }
+
+  .card-content p {
+    font-size: 14px;
+    color: #4a5568;
+    margin-bottom: 24px;
+  }
+
+  .action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: white;
+    color: #4C51BF;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .add-exam .action-button:hover {
+    background-color: #4C51BF;
+    color: white;
+    border-color: #4C51BF;
+  }
+
+  .view-exams .action-button:hover {
+    background-color: #3182ce;
+    color: white;
+    border-color: #3182ce;
+  }
+
+  @media (max-width: 768px) {
+    .action-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const cards = document.querySelectorAll('.action-card');
+
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    cards.forEach(card => observer.observe(card));
+  });
+</script>
+
+{% endblock content %}

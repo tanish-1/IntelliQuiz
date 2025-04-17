@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load widget_tweaks static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <style>
+
+
+     .card-wrapper {
+      max-width: 960px;
+      margin: 80px auto;
+      background-color: #191919;
+      color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .left-img {
+      flex: 1;
+      background: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .left-img img {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .form-section h2 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      border-radius: 8px;
+    }
+
+    .form-check-label {
+      margin-left: 5px;
+    }
+
+    .social-icons a {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .social-icons a:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+      .card-wrapper {
+        flex-direction: column;
+      }
+
+      .left-img {
+        padding: 20px;
+      }
+
+      .form-section {
+        padding: 30px 20px;
+      }
+    }
+    </style>
+  </head>
+  <body>
+    {% include "quiz/navbar.html" %}
+  <div class="card-wrapper">
+    <div class="left-img">
+         <img src="{% static 'image/student21.jpeg' %}" alt="Student Image">
+    </div>
+    <div class="form-section">
+        <h2>Teacher Login</h2>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            {% render_field form.username class="form-control" placeholder="Username" %}
+          </div>
+           <div class="mb-3">
+            {% render_field form.password class="form-control" placeholder="Password" %}
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+
+       <div class="text-center mt-3">
+        <small>Don't have an account? <a href="teachersignup">Create an account</a></small>
+      </div>
+
+      </div>
+    </div>
+    {% include "quiz/footer.html" %}
+  </body>
+</html>

@@ -1,0 +1,209 @@
+{% extends 'quiz/adminbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <style type="text/css">
+    .dashboard-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 30px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .dashboard-title:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary-color, #4361ee);
+      border-radius: 2px;
+    }
+
+    .stats-card {
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .stats-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .stats-card .card-block {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .stats-card h6 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .stats-card h6 a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .stats-card h6 a:hover {
+      color: #ffffff;
+    }
+
+    .stats-card h2 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stats-card i {
+      font-size: 38px;
+      opacity: 0.8;
+    }
+
+    .bg-students {
+      background: linear-gradient(135deg, #0396FF, #ABDCFF);
+    }
+
+    .bg-teachers {
+      background: linear-gradient(135deg, #6C63FF, #A594F9);
+    }
+
+    .bg-courses {
+      background: linear-gradient(135deg, #FE6786, #FF8E8E);
+    }
+
+    .bg-questions {
+      background: linear-gradient(135deg, #684CA0, #926EE4);
+    }
+
+    .dashboard-summary {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      margin-top: 40px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .summary-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #2d3748;
+    }
+
+    @media (max-width: 768px) {
+      .stats-card h2 {
+        font-size: 28px;
+      }
+
+      .stats-card i {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<div class="container">
+  <h1 class="dashboard-title">Admin Dashboard</h1>
+
+  <div class="row">
+    <!-- Students Card -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card stats-card bg-students">
+        <div class="card-block">
+          <h6 class="m-b-20">
+            <a href="admin-view-student">Total Students</a>
+          </h6>
+          <h2>
+            <i class="fas fa-user-graduate"></i>
+            <span>{{total_student}}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teachers Card -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card stats-card bg-teachers">
+        <div class="card-block">
+          <h6 class="m-b-20">
+            <a href="admin-view-teacher">Total Teachers</a>
+          </h6>
+          <h2>
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>{{total_teacher}}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Courses Card -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card stats-card bg-courses">
+        <div class="card-block">
+          <h6 class="m-b-20">
+            <a href="admin-view-course">Total Exams</a>
+          </h6>
+          <h2>
+            <i class="fas fa-book"></i>
+            <span>{{total_course}}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Card -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card stats-card bg-questions">
+        <div class="card-block">
+          <h6 class="m-b-20">
+            <a href="admin-view-question">Total Questions</a>
+          </h6>
+          <h2>
+            <i class="fas fa-question-circle"></i>
+            <span>{{total_question}}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Summary Section -->
+  <div class="dashboard-summary">
+    <h3 class="summary-title">System Overview</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <p>Welcome to the IntelliQuiz admin dashboard. From here you can manage all aspects of your quiz system including students, teachers, courses, and questions.</p>
+        <p>Use the navigation menu to access different sections of the admin panel.</p>
+      </div>
+      <div class="col-md-6">
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle mr-2"></i> Click on any card above to view detailed information and manage the respective section.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+{% endblock content %}

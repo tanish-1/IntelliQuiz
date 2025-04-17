@@ -1,0 +1,64 @@
+{% extends 'student/studentbase.html' %}
+{% block content %}
+{% load static %}
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    .exam-card {
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out;
+    }
+    .exam-card:hover {
+      transform: scale(1.02);
+    }
+    .rules-list li {
+      margin-bottom: 0.5rem;
+    }
+    .btn-start {
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<div class="container my-5">
+  <div class="card exam-card">
+    <div class="card-body p-5">
+      <h2 class="text-center text-primary mb-4">🚀 Exam Instructions</h2>
+
+      <div class="mb-4">
+        <h4 class="fw-bold text-secondary">📘 Exam Details:</h4>
+        <ul class="rules-list list-unstyled ps-3">
+          <li><strong>Exam Name:</strong> {{ course.course_name }}</li>
+          <li><strong>Total Questions:</strong> {{ total_questions }}</li>
+          <li><strong>Total Marks:</strong> {{ total_marks }}</li>
+          <li><strong>Time Duration:</strong> {{ duration_minutes }} minutes</li>
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h4 class="fw-bold text-secondary">📝 Rules:</h4>
+        <ul class="rules-list list-unstyled ps-3">
+          <li>All questions are <strong>multiple choice</strong>.</li>
+          <li><span class="text-danger fw-bold">Only one choice is correct.</span></li>
+          <li>Each question may carry <strong>different marks</strong>.</li>
+          <li>Answer as quickly as you can.</li>
+          <li>If you refresh or go back, a <strong>new question</strong> will appear, and the previous one will be considered attempted.</li>
+          <li>Questions are <strong>randomized</strong> for every user.</li>
+          <li>You’ll see your <strong>score immediately</strong> after submission.</li>
+        </ul>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="{% url 'start-exam' course.id %}" class="btn btn-info btn-lg btn-start">🎯 Start Exam</a>
+      </div>
+    </div>
+    <div class="card-footer text-center text-muted py-3">
+      ✨ Best of Luck!
+    </div>
+  </div>
+</div>
+{% endblock content %}

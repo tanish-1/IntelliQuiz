@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - QuizMaster</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FF9F43, #FF7F50);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20 L40 40 L20 60 L0 40 Z' fill='white' fill-opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            color: #5D3FD3;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #5D3FD3;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #5D3FD3;
+        }
+
+        .nav-link.active {
+            color: #5D3FD3;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #5D3FD3;
+            border-radius: 2px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 60px 40px;
+        }
+
+        .text-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title {
+            color: #5D3FD3;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            animation: slideRight 0.8s ease-out;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            animation: slideRight 0.8s 0.2s ease-out both;
+        }
+
+        .description {
+            color: #777;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            animation: slideRight 0.8s 0.4s ease-out both;
+        }
+
+        @keyframes slideRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #5D3FD3;
+            color: white;
+            font-weight: 600;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(93, 63, 211, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: slideRight 0.8s 0.6s ease-out both;
+            max-width: fit-content;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(93, 63, 211, 0.4);
+        }
+
+        .illustration {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .blob {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            background-color: #EBE5FF;
+            border-radius: 60% 40% 50% 70% / 60% 50% 70% 40%;
+            z-index: -1;
+            animation: blobAnimation 10s linear infinite alternate;
+        }
+
+        @keyframes blobAnimation {
+            0% {
+                border-radius: 60% 40% 50% 70% / 60% 50% 70% 40%;
+            }
+            50% {
+                border-radius: 40% 60% 70% 50% / 50% 70% 40% 60%;
+            }
+            100% {
+                border-radius: 70% 50% 40% 60% / 40% 60% 70% 50%;
+            }
+        }
+
+        .character {
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s;
+        }
+
+        .speech-bubble {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background-color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            font-size: 18px;
+            color: #5D3FD3;
+            animation: bobUpDown 2s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            transform: rotate(45deg);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.05);
+            z-index: -1;
+        }
+
+        @keyframes bobUpDown {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .dot {
+            position: absolute;
+            background-color: rgba(93, 63, 211, 0.1);
+            border-radius: 50%;
+        }
+
+        .stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+            animation: slideRight 0.8s 0.8s ease-out both;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #5D3FD3;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .content {
+                grid-template-columns: 1fr;
+                padding: 40px 30px;
+            }
+
+            .illustration {
+                order: -1;
+                margin-bottom: 20px;
+            }
+
+            .header {
+                padding: 20px 30px;
+            }
+
+            .nav {
+                gap: 20px;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav {
+                display: none;
+            }
+
+            .title {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 20px;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+            }
+
+            .stat-item {
+                min-width: 40%;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: #888;
+            background-color: #f7f7f7;
+        }
+    </style>
+</head>
+<body>
+{% include "quiz/navbar.html" %}
+    <div class="container">
+        <main class="content">
+            <div class="text-content">
+                <h1 class="title">ABOUT US</h1>
+                <h2 class="subtitle">We Make Learning Fun</h2>
+                <p class="description">
+                    At IntelliQuiz, we're passionate about making education engaging and accessible to everyone.
+                    Our platform combines cutting-edge technology with expert educational content to create
+                    interactive quizzes that make learning both effective and enjoyable.
+
+                    Whether you're a student preparing for exams, a teacher creating resources for your class,
+                    or just someone who loves to learn, our platform is designed with you in mind.
+                </p>
+                <a href="#" class="cta-button">Get Started</a>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">10M+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500K+</div>
+                        <div class="stat-label">Quizzes Created</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfaction Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="illustration">
+                <div class="blob"></div>
+                <div class="speech-bubble">Hello!</div>
+                <img src="{% static 'image/aboutus.png' %}" alt="Quiz Master Character" class="character">
+
+                <div class="dots">
+                    <div class="dot" style="width: 20px; height: 20px; top: 20%; left: 10%;"></div>
+                    <div class="dot" style="width: 15px; height: 15px; top: 30%; left: 20%;"></div>
+                    <div class="dot" style="width: 25px; height: 25px; top: 70%; left: 15%;"></div>
+                    <div class="dot" style="width: 10px; height: 10px; top: 40%; left: 80%;"></div>
+                    <div class="dot" style="width: 15px; height: 15px; top: 60%; left: 85%;"></div>
+                    <div class="dot" style="width: 12px; height: 12px; top: 80%; left: 75%;"></div>
+                </div>
+            </div>
+        </main>
+
+
+    </div>
+
+    <script>
+        // Simple animation for the dots
+        document.addEventListener('DOMContentLoaded', function() {
+            const dots = document.querySelectorAll('.dot');
+
+            dots.forEach(dot => {
+                // Random starting position
+                const top = Math.random() * 100;
+                const left = Math.random() * 100;
+
+                // Random size
+                const size = 5 + Math.random() * 20;
+
+                dot.style.top = `${top}%`;
+                dot.style.left = `${left}%`;
+                dot.style.width = `${size}px`;
+                dot.style.height = `${size}px`;
+
+                // Animation
+                setInterval(() => {
+                    const newTop = parseFloat(dot.style.top) + (Math.random() * 2 - 1);
+                    const newLeft = parseFloat(dot.style.left) + (Math.random() * 2 - 1);
+
+                    // Keep within bounds
+                    if (newTop > 0 && newTop < 100) {
+                        dot.style.top = `${newTop}%`;
+                    }
+
+                    if (newLeft > 0 && newLeft < 100) {
+                        dot.style.left = `${newLeft}%`;
+                    }
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
