@@ -3,7 +3,7 @@
 ---
 ## screenshots
 ### Homepage
-![img.png](img.png)
+![img_5.png](img_5.png)
 ### Admin Dashboard
 ![img_1.png](img_1.png)
 ### Exam Rules
